@@ -15,7 +15,7 @@ void setup_glassplain_from_triangle(triangle *tr) {
         tr->refractive_index = 1.3;
         tr->specular = 20;
         tr->transparent = true;
-        point_3d n = get_normal_vector(tr->vertex[0], tr->vertex[1], tr->vertex[2], tr->left_oriented);
+        point_3d n = get_normal_vector(tr->vertex[0], tr->vertex[1], tr->vertex[2]);
                 tr->A = int(round(n.x));
                 tr->B = int(round(n.y));
                 tr->C = int(round(n.z));

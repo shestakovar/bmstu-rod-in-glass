@@ -180,6 +180,6 @@ private:
     }
 };
 
-point_3d get_normal_vector(point_3d vert_1, point_3d vert_2, point_3d vert_3, bool left_oriented);
+point_3d get_normal_vector(point_3d vert_1, point_3d vert_2, point_3d vert_3);
 
 #endif // PRIMITIVES_H
