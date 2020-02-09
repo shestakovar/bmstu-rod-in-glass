@@ -3,6 +3,8 @@
 point_3d O = {0, 0, 0};
 light_src lamp = {0.6, {2, 1, 1}};
 point_3d angle = {0, 0, 0};
+double coeff_n = 1.33;
+bool isball = true;
 
 double degrees_to_radians(double angle) {
     return angle * PI / 180;
@@ -12,7 +14,7 @@ void setup_glassplain_from_triangle(triangle *tr) {
         tr->color = {0, 186, 228};
         tr->reflective = 0.1;
         tr->refractive = 0.4;
-        tr->refractive_index = 1.3;
+        tr->refractive_index = coeff_n;
         tr->specular = 20;
         tr->transparent = true;
         point_3d n = get_normal_vector(tr->vertex[0], tr->vertex[1], tr->vertex[2]);
@@ -114,16 +116,18 @@ scene *init_scene() {
 //    t8->transparent = false;
 //    items->t_vec.push_back(t8);
 
-    sphere *t9 = new sphere;
-    t9->color = {204, 102, 0};
-    t9->center = {0, 5.5, 10};
-    t9->radius = 1;
-    t9->specular = 500;
-    t9->reflective = 0.02; //0.02
-    t9->refractive = 0.5;
-    t9->refractive_index = 1.5;
-    t9->transparent = false;
-    sc_o->items.push_back(t9);
+    if (isball) {
+        sphere *t9 = new sphere;
+        t9->color = {204, 102, 0};
+        t9->center = {0, 5.5, 10};
+        t9->radius = 1;
+        t9->specular = 500;
+        t9->reflective = 0.02; //0.02
+        t9->refractive = 0.5;
+        t9->refractive_index = 1.5;
+        t9->transparent = false;
+        sc_o->items.push_back(t9);
+    }
 
     //СТАКАН
     //Перед
@@ -296,5 +300,6 @@ scene *init_scene() {
     sc->O = O;
     sc->objects = sc_o;
     sc->angle = {degrees_to_radians(angle.x), degrees_to_radians(angle.y), degrees_to_radians(angle.z)};
+    sc->isball = isball;
     return sc;
 }

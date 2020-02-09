@@ -35,6 +35,8 @@ void MainWindow::on_pushButton_clicked()
     O = {std::stod(cam_x_pos), std::stod(cam_y_pos), std::stod(cam_z_pos)};
     lamp.pos = {std::stod(light_x_pos), std::stod(light_y_pos), std::stod(light_z_pos)};
     angle = {std::stod(turn_x), std::stod(turn_y), std::stod(turn_z)};
+    coeff_n = std::stod(ui->lineEdit->text().toStdString());
+    isball = ui->checkBox->isChecked();
     update();
 
 

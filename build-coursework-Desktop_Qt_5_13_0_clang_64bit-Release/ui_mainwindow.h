@@ -11,6 +11,7 @@
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
+#include <QtWidgets/QCheckBox>
 #include <QtWidgets/QFrame>
 #include <QtWidgets/QGroupBox>
 #include <QtWidgets/QLabel>
@@ -56,6 +57,10 @@ public:
     QLineEdit *turnX;
     QLabel *label_12;
     QPushButton *pushButton;
+    QGroupBox *groupBox_4;
+    QLabel *label_13;
+    QLineEdit *lineEdit;
+    QCheckBox *checkBox;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
@@ -151,8 +156,20 @@ public:
         label_12->setGeometry(QRect(40, 50, 16, 16));
         pushButton = new QPushButton(centralwidget);
         pushButton->setObjectName(QString::fromUtf8("pushButton"));
-        pushButton->setGeometry(QRect(750, 410, 141, 32));
+        pushButton->setGeometry(QRect(740, 520, 141, 32));
         pushButton->setAutoDefault(false);
+        groupBox_4 = new QGroupBox(centralwidget);
+        groupBox_4->setObjectName(QString::fromUtf8("groupBox_4"));
+        groupBox_4->setGeometry(QRect(700, 400, 251, 111));
+        label_13 = new QLabel(groupBox_4);
+        label_13->setObjectName(QString::fromUtf8("label_13"));
+        label_13->setGeometry(QRect(10, 30, 241, 16));
+        lineEdit = new QLineEdit(groupBox_4);
+        lineEdit->setObjectName(QString::fromUtf8("lineEdit"));
+        lineEdit->setGeometry(QRect(60, 50, 113, 21));
+        checkBox = new QCheckBox(groupBox_4);
+        checkBox->setObjectName(QString::fromUtf8("checkBox"));
+        checkBox->setGeometry(QRect(10, 80, 201, 20));
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName(QString::fromUtf8("menubar"));
@@ -198,6 +215,10 @@ public:
         turnX->setText(QCoreApplication::translate("MainWindow", "30", nullptr));
         label_12->setText(QCoreApplication::translate("MainWindow", "X", nullptr));
         pushButton->setText(QCoreApplication::translate("MainWindow", "\320\222\320\270\320\267\321\203\320\260\320\273\320\270\320\267\320\270\321\200\320\276\320\262\320\260\321\202\321\214", nullptr));
+        groupBox_4->setTitle(QCoreApplication::translate("MainWindow", "\320\224\320\276\320\277\320\276\320\273\320\275\320\270\321\202\320\265\320\273\321\214\320\275\320\276", nullptr));
+        label_13->setText(QCoreApplication::translate("MainWindow", "\320\237\320\276\320\272\320\260\320\267\320\260\321\202\320\265\320\273\321\214 \320\277\321\200\320\265\320\273\320\276\320\274\320\273\320\265\320\275\320\270\321\217 \320\266\320\270\320\264\320\272\320\276\321\201\321\202\320\270", nullptr));
+        lineEdit->setText(QCoreApplication::translate("MainWindow", "1.33", nullptr));
+        checkBox->setText(QCoreApplication::translate("MainWindow", "\320\224\320\276\320\261\320\260\320\262\320\270\321\202\321\214 \320\275\320\260\320\272\320\276\320\275\320\265\321\207\320\275\320\270\320\272-\321\210\320\260\321\200", nullptr));
     } // retranslateUi
 
 };
