@@ -180,6 +180,47 @@ private:
     }
 };
 
+class cylinder : public Figure {
+public:
+    point_3d center;
+    double radius;
+    double up_y;
+    double down_y;
+
+    std::vector<double> get_intersect_points(point_3d viewer, point_3d viewport) override {
+        point_3d OC = {viewer.x - center.x, viewer.y - center.y, viewer.z - center.z};
+
+        double a = viewport.x * viewport.x + viewport.z * viewport.z;
+        double b = 2*(viewport.x * OC.x + viewport.z * OC.z);
+        double c = OC.x * OC.x + OC.z * OC.z - radius*radius;
+
+        std::vector<double> roots = solve_quadratic_equation(a, b, c);
+        if (roots.size() > 0) {
+            auto min_root = std::min_element(roots.begin(), roots.end());
+
+            point_3d crosspoint = viewer + viewport * *min_root;
+            if (crosspoint.y < down_y || crosspoint.y > up_y)
+                roots.clear();
+        }
+        return roots;
+    }
+    point_3d get_normal(point_3d P) override {
+        return {P.x - center.x, 0, P.z - center.z};
+    }
+private:
+    std::vector<double> solve_quadratic_equation(double a, double b, double c) {
+        std::vector<double> result;
+        double D = b*b - 4*a*c;
+        if (D >= EPS) {
+            double x1 = (-b + sqrt(D))/(2*a);
+            result.push_back(x1);
+            double x2 = (-b - sqrt(D))/(2*a);
+            result.push_back(x2);
+        }
+        return result;
+    }
+};
+
 point_3d get_normal_vector(point_3d vert_1, point_3d vert_2, point_3d vert_3);
 
 #endif // PRIMITIVES_H
