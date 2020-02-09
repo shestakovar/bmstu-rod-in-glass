@@ -219,7 +219,7 @@
       </rect>
      </property>
      <property name="text">
-      <string>6</string>
+      <string>8</string>
      </property>
     </widget>
     <widget class="QLineEdit" name="camX">
@@ -232,7 +232,7 @@
       </rect>
      </property>
      <property name="text">
-      <string>5</string>
+      <string>6</string>
      </property>
     </widget>
     <widget class="QLabel" name="label_8">

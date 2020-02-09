@@ -186,8 +186,8 @@ public:
         label_6->setText(QCoreApplication::translate("MainWindow", "Y", nullptr));
         camZ->setText(QCoreApplication::translate("MainWindow", "0", nullptr));
         label_7->setText(QCoreApplication::translate("MainWindow", "\320\237\320\276\320\273\320\276\320\266\320\265\320\275\320\270\320\265 \320\272\320\260\320\274\320\265\321\200\321\213", nullptr));
-        camY->setText(QCoreApplication::translate("MainWindow", "6", nullptr));
-        camX->setText(QCoreApplication::translate("MainWindow", "5", nullptr));
+        camY->setText(QCoreApplication::translate("MainWindow", "8", nullptr));
+        camX->setText(QCoreApplication::translate("MainWindow", "6", nullptr));
         label_8->setText(QCoreApplication::translate("MainWindow", "X", nullptr));
         groupBox_3->setTitle(QCoreApplication::translate("MainWindow", "\320\237\320\276\320\262\320\276\321\200\320\276\321\202", nullptr));
         label_9->setText(QCoreApplication::translate("MainWindow", "Z", nullptr));

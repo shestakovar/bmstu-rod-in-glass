@@ -10,7 +10,7 @@ double degrees_to_radians(double angle) {
 
 void setup_glassplain_from_triangle(triangle *tr) {
         tr->color = {0, 186, 228};
-        tr->reflective = 0.01;
+        tr->reflective = 0.1;
         tr->refractive = 0.4;
         tr->refractive_index = 1.3;
         tr->specular = 20;
@@ -68,7 +68,7 @@ scene *init_scene() {
     t4->refractive = 0;
     t4->refractive_index = 1;
     t4->transparent = false;
-    sc_o->items.push_back(t4); //!
+//    sc_o->items.push_back(t4); //!
 
     sphere *t5 = new sphere;
     t5->color = {255, 255, 0}; //yellow
@@ -114,6 +114,17 @@ scene *init_scene() {
 //    t8->transparent = false;
 //    items->t_vec.push_back(t8);
 
+    sphere *t9 = new sphere;
+    t9->color = {204, 102, 0};
+    t9->center = {0, 5.5, 10};
+    t9->radius = 1;
+    t9->specular = 500;
+    t9->reflective = 0.02; //0.02
+    t9->refractive = 0.5;
+    t9->refractive_index = 1.5;
+    t9->transparent = false;
+    sc_o->items.push_back(t9);
+
     //СТАКАН
     //Перед
     const int width = 2; //ширина /2
@@ -126,7 +137,7 @@ scene *init_scene() {
 //    tr.B = 0;
 //    tr.C = 1;
 //    tr.D = -8;
-    tr->left_oriented = true;
+    tr->left_oriented = false;
     setup_glassplain_from_triangle(tr);
     sc_o->items.push_back(tr);
 
@@ -138,7 +149,7 @@ scene *init_scene() {
 //    tr.B = 0;
 //    tr.C = 1;
 //    tr.D = -8;
-    tr->left_oriented = true;
+    tr->left_oriented = false;
     setup_glassplain_from_triangle(tr);
     sc_o->items.push_back(tr);
 
@@ -176,7 +187,7 @@ scene *init_scene() {
 //    tr.B = 0;
 //    tr.C = 0;
 //    tr.D = 2;
-    tr->left_oriented = false;
+    tr->left_oriented = true;
     setup_glassplain_from_triangle(tr);
     sc_o->items.push_back(tr);
 
@@ -188,7 +199,7 @@ scene *init_scene() {
 //    tr.B = 0;
 //    tr.C = 0;
 //    tr.D = 2;
-    tr->left_oriented = false;
+    tr->left_oriented = true;
     setup_glassplain_from_triangle(tr);
     sc_o->items.push_back(tr);
 
@@ -201,7 +212,7 @@ scene *init_scene() {
 //    tr.B = 0;
 //    tr.C = -1;
 //    tr.D = 8 + width * 2;
-    tr->left_oriented = false;
+    tr->left_oriented = true;
     setup_glassplain_from_triangle(tr);
     sc_o->items.push_back(tr);
 
@@ -213,7 +224,7 @@ scene *init_scene() {
 //    tr.B = 0;
 //    tr.C = - 1;
 //    tr.D = 8 + width * 2;
-    tr->left_oriented = false;
+    tr->left_oriented = true;
     setup_glassplain_from_triangle(tr);
     sc_o->items.push_back(tr);
 
@@ -226,7 +237,7 @@ scene *init_scene() {
 //    tr.B = -1;
 //    tr.C = 0;
 //    tr.D = -height;
-    tr->left_oriented = true;
+    tr->left_oriented = false;
     setup_glassplain_from_triangle(tr);
     sc_o->items.push_back(tr);
 
@@ -238,7 +249,7 @@ scene *init_scene() {
 //    tr.B = -1;
 //    tr.C = 0;
 //    tr.D = -height;
-    tr->left_oriented = true;
+    tr->left_oriented = false;
     setup_glassplain_from_triangle(tr);
     sc_o->items.push_back(tr);
 
@@ -266,6 +277,19 @@ scene *init_scene() {
     tr->left_oriented = true;
     setup_glassplain_from_triangle(tr);
     sc_o->items.push_back(tr);
+
+    cylinder *cyl = new cylinder;
+    cyl->color = {255, 0, 0};
+    cyl->center = {0, 3, 10};
+    cyl->radius = 0.25;
+    cyl->specular = 200;
+    cyl->reflective = 0.03; //0.03
+    cyl->refractive = 0;
+    cyl->refractive_index = 1;
+    cyl->transparent = false;
+    cyl->up_y = 5;
+    cyl->down_y = -3;
+    sc_o->items.push_back(cyl);
 
 
     scene *sc = new scene;
