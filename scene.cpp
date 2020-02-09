@@ -10,13 +10,24 @@ double degrees_to_radians(double angle) {
     return angle * PI / 180;
 }
 
-void setup_glassplain_from_triangle(triangle *tr) {
+//0 = water, 1 = glass
+void setup_glassplain_from_triangle(triangle *tr, int type) {
+    if (type == 0) {
         tr->color = {0, 186, 228};
         tr->reflective = 0.1;
         tr->refractive = 0.4;
         tr->refractive_index = coeff_n;
         tr->specular = 20;
         tr->transparent = true;
+    }
+    else {
+        tr->color = {153, 255, 204};
+        tr->reflective = 0.1;
+        tr->refractive = 0.4;
+        tr->refractive_index = 1;
+        tr->specular = 20;
+        tr->transparent = true;
+    }
         point_3d n = get_normal_vector(tr->vertex[0], tr->vertex[1], tr->vertex[2]);
                 tr->A = int(round(n.x));
                 tr->B = int(round(n.y));
@@ -142,7 +153,7 @@ scene *init_scene() {
 //    tr.C = 1;
 //    tr.D = -8;
     tr->left_oriented = false;
-    setup_glassplain_from_triangle(tr);
+    setup_glassplain_from_triangle(tr, 0);
     sc_o->items.push_back(tr);
 
     tr = new triangle;
@@ -154,7 +165,7 @@ scene *init_scene() {
 //    tr.C = 1;
 //    tr.D = -8;
     tr->left_oriented = false;
-    setup_glassplain_from_triangle(tr);
+    setup_glassplain_from_triangle(tr, 0);
     sc_o->items.push_back(tr);
 
     //Левый бок
@@ -167,7 +178,7 @@ scene *init_scene() {
 //    tr.C = 0;
 //    tr.D = 2;
     tr->left_oriented = true;
-    setup_glassplain_from_triangle(tr);
+    setup_glassplain_from_triangle(tr, 0);
     sc_o->items.push_back(tr);
 
     tr = new triangle;
@@ -179,7 +190,7 @@ scene *init_scene() {
 //    tr.C = 0;
 //    tr.D = 2;
     tr->left_oriented = true;
-    setup_glassplain_from_triangle(tr);
+    setup_glassplain_from_triangle(tr, 0);
     sc_o->items.push_back(tr);
 
     //Правый бок
@@ -192,7 +203,7 @@ scene *init_scene() {
 //    tr.C = 0;
 //    tr.D = 2;
     tr->left_oriented = true;
-    setup_glassplain_from_triangle(tr);
+    setup_glassplain_from_triangle(tr, 0);
     sc_o->items.push_back(tr);
 
     tr = new triangle;
@@ -204,7 +215,7 @@ scene *init_scene() {
 //    tr.C = 0;
 //    tr.D = 2;
     tr->left_oriented = true;
-    setup_glassplain_from_triangle(tr);
+    setup_glassplain_from_triangle(tr, 0);
     sc_o->items.push_back(tr);
 
     //Зад
@@ -217,7 +228,7 @@ scene *init_scene() {
 //    tr.C = -1;
 //    tr.D = 8 + width * 2;
     tr->left_oriented = true;
-    setup_glassplain_from_triangle(tr);
+    setup_glassplain_from_triangle(tr, 0);
     sc_o->items.push_back(tr);
 
     tr = new triangle;
@@ -229,7 +240,7 @@ scene *init_scene() {
 //    tr.C = - 1;
 //    tr.D = 8 + width * 2;
     tr->left_oriented = true;
-    setup_glassplain_from_triangle(tr);
+    setup_glassplain_from_triangle(tr, 0);
     sc_o->items.push_back(tr);
 
     //Низ
@@ -242,7 +253,7 @@ scene *init_scene() {
 //    tr.C = 0;
 //    tr.D = -height;
     tr->left_oriented = false;
-    setup_glassplain_from_triangle(tr);
+    setup_glassplain_from_triangle(tr, 0);
     sc_o->items.push_back(tr);
 
     tr = new triangle;
@@ -254,7 +265,7 @@ scene *init_scene() {
 //    tr.C = 0;
 //    tr.D = -height;
     tr->left_oriented = false;
-    setup_glassplain_from_triangle(tr);
+    setup_glassplain_from_triangle(tr, 0);
     sc_o->items.push_back(tr);
 
     //Верх
@@ -267,7 +278,7 @@ scene *init_scene() {
 //    tr.C = 0;
 //    tr.D = -height;
     tr->left_oriented = true;
-    setup_glassplain_from_triangle(tr);
+    setup_glassplain_from_triangle(tr, 0);
     sc_o->items.push_back(tr);
 
     tr = new triangle;
@@ -279,7 +290,7 @@ scene *init_scene() {
 //    tr.C = 0;
 //    tr.D = -height;
     tr->left_oriented = true;
-    setup_glassplain_from_triangle(tr);
+    setup_glassplain_from_triangle(tr, 0);
     sc_o->items.push_back(tr);
 
     cylinder *cyl = new cylinder;
@@ -294,6 +305,110 @@ scene *init_scene() {
     cyl->up_y = 5;
     cyl->down_y = -3;
     sc_o->items.push_back(cyl);
+
+
+    //СТАКАН
+    //Перед
+    const double height_glass = 1; //высота незаполненной части
+    tr = new triangle;
+    tr->vertex[0] = {-width, height, 8}; //Левая нижняя
+    tr->vertex[2] = {width, height, 8}; //Правая нижняя
+    tr->vertex[1] = {width, height + height_glass, 8}; //Правая верхняя
+//    tr.A = 0;
+//    tr.B = 0;
+//    tr.C = 1;
+//    tr.D = -8;
+    tr->left_oriented = false;
+    setup_glassplain_from_triangle(tr, 1);
+    sc_o->items.push_back(tr);
+
+    tr = new triangle;
+    tr->vertex[0] = {width, height + height_glass, 8}; //Правая верхняя
+    tr->vertex[1] = {-width, height, 8}; //Левая нижняя
+    tr->vertex[2] = {-width, height + height_glass, 8}; //Левая верхняя
+//    tr.A = 0;
+//    tr.B = 0;
+//    tr.C = 1;
+//    tr.D = -8;
+    tr->left_oriented = false;
+    setup_glassplain_from_triangle(tr, 1);
+    sc_o->items.push_back(tr);
+
+    //Левый бок
+    tr = new triangle;
+    tr->vertex[0] = {-width, height, 8}; //Левая нижняя
+    tr->vertex[1] = {-width, height + height_glass, 8+width*2}; //Левая верхняя дальняя
+    tr->vertex[2] = {-width, height + height_glass, 8}; //Левая верхняя
+//    tr.A = 1;
+//    tr.B = 0;
+//    tr.C = 0;
+//    tr.D = 2;
+    tr->left_oriented = true;
+    setup_glassplain_from_triangle(tr, 1);
+    sc_o->items.push_back(tr);
+
+    tr = new triangle;
+    tr->vertex[0] = {-width, height, 8}; //Левая нижняя
+    tr->vertex[1] = {-width, height, 8+width*2}; //Левая нижняя дальняя
+    tr->vertex[2] = {-width, height + height_glass, 8+width*2}; //Левая верхняя дальняя
+//    tr.A = 1;
+//    tr.B = 0;
+//    tr.C = 0;
+//    tr.D = 2;
+    tr->left_oriented = true;
+    setup_glassplain_from_triangle(tr, 1);
+    sc_o->items.push_back(tr);
+
+    //Правый бок
+    tr = new triangle;
+    tr->vertex[0] = {width, height + height_glass, 8}; //Правая верхняя
+    tr->vertex[1] = {width, height, 8}; //Правая нижняя
+    tr->vertex[2] = {width, height, 8+width*2}; //Правая нижняя дальняя
+//    tr.A = -1;
+//    tr.B = 0;
+//    tr.C = 0;
+//    tr.D = 2;
+    tr->left_oriented = true;
+    setup_glassplain_from_triangle(tr, 1);
+    sc_o->items.push_back(tr);
+
+    tr = new triangle;
+    tr->vertex[0] = {width, height, 8 + width*2}; //Правая нижняя дальняя
+    tr->vertex[1] = {width, height + height_glass, 8+width*2}; //Правая верхняя дальняя
+    tr->vertex[2] = {width, height + height_glass, 8}; //Правая верхняя
+//    tr.A = -1;
+//    tr.B = 0;
+//    tr.C = 0;
+//    tr.D = 2;
+    tr->left_oriented = true;
+    setup_glassplain_from_triangle(tr, 1);
+    sc_o->items.push_back(tr);
+
+    //Зад
+    tr = new triangle;
+    tr->vertex[0] = {-width, height, 8+width*2}; //Левая нижняя
+    tr->vertex[1] = {width, height + height_glass, 8+width*2}; //Правая верхняя
+    tr->vertex[2] = {width, height, 8+width*2}; //Правая нижняя
+//    tr.A = 0;
+//    tr.B = 0;
+//    tr.C = -1;
+//    tr.D = 8 + width * 2;
+    tr->left_oriented = true;
+    setup_glassplain_from_triangle(tr, 1);
+    sc_o->items.push_back(tr);
+
+    tr = new triangle;
+    tr->vertex[0] = {-width, height, 8+width*2}; //Левая нижняя
+    tr->vertex[1] = {-width, height + height_glass, 8+width*2}; //Левая верхняя
+    tr->vertex[2] = {width, height + height_glass, 8+width*2}; //Правая верхняя
+//    tr.A = 0;
+//    tr.B = 0;
+//    tr.C = - 1;
+//    tr.D = 8 + width * 2;
+    tr->left_oriented = true;
+    setup_glassplain_from_triangle(tr, 1);
+    sc_o->items.push_back(tr);
+
 
 
     scene *sc = new scene;
