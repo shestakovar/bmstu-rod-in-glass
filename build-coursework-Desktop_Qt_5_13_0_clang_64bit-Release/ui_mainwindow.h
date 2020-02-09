@@ -10,6 +10,7 @@
 #define UI_MAINWINDOW_H
 
 #include <QtCore/QVariant>
+#include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QCheckBox>
 #include <QtWidgets/QFrame>
@@ -17,6 +18,7 @@
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QMainWindow>
+#include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QStatusBar>
@@ -28,6 +30,8 @@ QT_BEGIN_NAMESPACE
 class Ui_MainWindow
 {
 public:
+    QAction *action;
+    QAction *action_2;
     QWidget *centralwidget;
     QFrame *frame;
     QWidget *verticalLayoutWidget;
@@ -62,6 +66,7 @@ public:
     QLineEdit *lineEdit;
     QCheckBox *checkBox;
     QMenuBar *menubar;
+    QMenu *menu;
     QStatusBar *statusbar;
 
     void setupUi(QMainWindow *MainWindow)
@@ -69,6 +74,10 @@ public:
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
         MainWindow->resize(1000, 800);
+        action = new QAction(MainWindow);
+        action->setObjectName(QString::fromUtf8("action"));
+        action_2 = new QAction(MainWindow);
+        action_2->setObjectName(QString::fromUtf8("action_2"));
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
         frame = new QFrame(centralwidget);
@@ -175,10 +184,16 @@ public:
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName(QString::fromUtf8("menubar"));
         menubar->setGeometry(QRect(0, 0, 1000, 22));
+        menu = new QMenu(menubar);
+        menu->setObjectName(QString::fromUtf8("menu"));
         MainWindow->setMenuBar(menubar);
         statusbar = new QStatusBar(MainWindow);
         statusbar->setObjectName(QString::fromUtf8("statusbar"));
         MainWindow->setStatusBar(statusbar);
+
+        menubar->addAction(menu->menuAction());
+        menu->addAction(action);
+        menu->addAction(action_2);
 
         retranslateUi(MainWindow);
 
@@ -190,7 +205,9 @@ public:
 
     void retranslateUi(QMainWindow *MainWindow)
     {
-        MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "MainWindow", nullptr));
+        MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "\320\232\321\203\321\200\321\201\320\276\320\262\320\276\320\271 \320\277\321\200\320\276\320\265\320\272\321\202", nullptr));
+        action->setText(QCoreApplication::translate("MainWindow", "\320\236 \320\277\321\200\320\276\320\263\321\200\320\260\320\274\320\274\320\265", nullptr));
+        action_2->setText(QCoreApplication::translate("MainWindow", "\320\222\321\213\321\205\320\276\320\264", nullptr));
         groupBox->setTitle(QCoreApplication::translate("MainWindow", "\320\237\320\276\320\273\320\276\320\266\320\265\320\275\320\270\320\265 \320\270\321\201\321\202\320\276\321\207\320\275\320\270\320\272\320\260 \321\201\320\262\320\265\321\202\320\260", nullptr));
         label_4->setText(QCoreApplication::translate("MainWindow", "Z", nullptr));
         label_3->setText(QCoreApplication::translate("MainWindow", "Y", nullptr));
@@ -220,6 +237,7 @@ public:
         label_13->setText(QCoreApplication::translate("MainWindow", "\320\237\320\276\320\272\320\260\320\267\320\260\321\202\320\265\320\273\321\214 \320\277\321\200\320\265\320\273\320\276\320\274\320\273\320\265\320\275\320\270\321\217 \320\266\320\270\320\264\320\272\320\276\321\201\321\202\320\270", nullptr));
         lineEdit->setText(QCoreApplication::translate("MainWindow", "1.33", nullptr));
         checkBox->setText(QCoreApplication::translate("MainWindow", "\320\224\320\276\320\261\320\260\320\262\320\270\321\202\321\214 \320\275\320\260\320\272\320\276\320\275\320\265\321\207\320\275\320\270\320\272-\321\210\320\260\321\200", nullptr));
+        menu->setTitle(QCoreApplication::translate("MainWindow", "\320\234\320\265\320\275\321\216", nullptr));
     } // retranslateUi
 
 };

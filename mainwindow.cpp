@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <string>
+#include <QMessageBox>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -40,4 +41,16 @@ void MainWindow::on_pushButton_clicked()
     update();
 
 
+}
+
+void MainWindow::on_action_triggered()
+{
+    QMessageBox msg;
+    msg.setText("Программа моделирует стержень в стакане с жидкостью. Имеется возможность изменять показатель преломления и добавлять наконечник в виде шара.\nАвтор: студент ИУ7-54Б Шестаков Андрей");
+    msg.exec();
+}
+
+void MainWindow::on_action_2_triggered()
+{
+    qApp->quit();
 }
