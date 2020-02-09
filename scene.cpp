@@ -1,8 +1,8 @@
 #include "scene.h"
 
-point_3d O = {0, 0, 0};
+point_3d O = {6, 8, 0};
 light_src lamp = {0.6, {2, 1, 1}};
-point_3d angle = {0, 0, 0};
+point_3d angle = {30, -30, 0};
 double coeff_n = 1.33;
 bool isball = true;
 

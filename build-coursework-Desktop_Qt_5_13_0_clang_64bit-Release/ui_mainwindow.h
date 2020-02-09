@@ -170,6 +170,7 @@ public:
         checkBox = new QCheckBox(groupBox_4);
         checkBox->setObjectName(QString::fromUtf8("checkBox"));
         checkBox->setGeometry(QRect(10, 80, 201, 20));
+        checkBox->setChecked(true);
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName(QString::fromUtf8("menubar"));
