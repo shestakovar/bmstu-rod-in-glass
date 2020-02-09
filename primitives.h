@@ -128,6 +128,8 @@ public:
         return result;
     }
     point_3d get_normal(point_3d P) override {
+        if (left_oriented)
+            return {-A, -B, -C};
         return {A, B, C};
     }
 };

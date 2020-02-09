@@ -13,47 +13,30 @@ point_3d canvas_to_viewport(point_2d p, int canvas_width, int canvas_height) {
 // 0 - Nothing
 // 1 - Sphere
 // 2 - Triangle
-Figure *get_closest_intersection(point_3d viewer, point_3d viewport, physical_items *item,
-                              double &x_min, int &result, double t_min = 1, double t_max = INT_MAX,
+Figure *get_closest_intersection(point_3d viewer, point_3d viewport, std::vector<Figure*> item,
+                              double &x_min, double t_min = 1, double t_max = INT_MAX,
                              bool find_tranparent = true) {
     Figure *closest = NULL;
     x_min = INT_MAX;
-    result = 0;
-    for (auto i = 0; i < item->t_vec.size(); i++) {
-        bool transparent = find_tranparent || !item->t_vec[i]->transparent;
-        std::vector<double> points = item->t_vec[i]->get_intersect_points(viewer, viewport);
+    for (auto i = 0; i < item.size(); i++) {
+        bool transparent = find_tranparent || !item[i]->transparent;
+        std::vector<double> points = item[i]->get_intersect_points(viewer, viewport);
         if (points.size() == 1) {
             if (points[0] < x_min && points[0] > t_min && points[0] < t_max && transparent) {
                 x_min = points[0];
-                closest = item->t_vec[i];
-                result = 1;
+                closest = item[i];
             }
         }
         else if (points.size() == 2) {
-            bool transparent = find_tranparent || !item->t_vec[i]->transparent;
+            bool transparent = find_tranparent || !item[i]->transparent;
                 if (points[0] < x_min && points[0] > t_min && points[0] < t_max && transparent) {
                     x_min = points[0];
-                    closest = item->t_vec[i];
-                    result = 1;
+                    closest = item[i];
                 }
                 if (points[1] < x_min && points[1] > t_min && points[1] < t_max && transparent) {
                     x_min = points[1];
-                    closest = item->t_vec[i];
-                    result = 1;
+                    closest = item[i];
                 }
-        }
-    }
-
-    for (auto i = 0; i < item->tr_vec.size(); i++) {
-        auto t = item->tr_vec[i];
-        bool transparent = find_tranparent || !t->transparent;
-        std::vector<double> points = t->get_intersect_points(viewer, viewport);
-        if (points.size() == 1) {
-            if (points[0] < x_min && points[0] > t_min && points[0] < t_max && transparent) {
-                x_min = points[0];
-                closest = item->tr_vec[i];
-                result = 2;
-            }
         }
     }
     return closest;
@@ -96,10 +79,9 @@ double get_lighting(point_3d P, point_3d N, scene_objects *objects, int specular
     point_3d L = light.pos - P;
 
     double x_min = INT_MAX;
-    int r;
-    Figure *closest = get_closest_intersection(P, L, objects->item, x_min, r, EPS, 1, false);;
+    Figure *closest = get_closest_intersection(P, L, objects->items, x_min, EPS, 1, false);;
     //если в тени или стеклянный
-    if (r != 0)
+    if (closest != NULL)
         return intensity;
 
     // Диффузное отражение
@@ -122,10 +104,9 @@ double get_lighting(point_3d P, point_3d N, scene_objects *objects, int specular
 color trace(point_3d orig, point_3d dest, scene_objects *objects, int depth, double t_min, double t_max) {
     color background_color = {255, 255, 255};
     double x_min;
-    int r;
-    Figure *closest = get_closest_intersection(orig, dest, objects->item, x_min, r, t_min, t_max);;
+    Figure *closest = get_closest_intersection(orig, dest, objects->items, x_min, t_min, t_max);;
 
-    if (r == 0)
+    if (closest == NULL)
         return background_color;
 
     color result;
@@ -145,10 +126,7 @@ color trace(point_3d orig, point_3d dest, scene_objects *objects, int depth, dou
     }
     else if (closest->reflective <= EPS) { //ONLY REFRACTIVE
         point_3d Ref;
-        if (r == 1)
-            Ref = refract_ray(dest / dest.length(), N / N.length(), closest->refractive_index);
-        else
-            Ref = refract_ray(dest / dest.length(), N / N.length() * -1, closest->refractive_index);
+        Ref = refract_ray(dest / dest.length(), N / N.length(), closest->refractive_index);
         color refracted_color = trace(P, Ref, objects, depth-1, EPS, INT_MAX);
         result =  result * (1 - closest->refractive) + refracted_color * closest->refractive;
     }
@@ -156,10 +134,7 @@ color trace(point_3d orig, point_3d dest, scene_objects *objects, int depth, dou
         point_3d R = reflect_ray(dest * -1, N);
         point_3d Ref;
         color reflected_color = trace(P, R, objects, depth-1, EPS, INT_MAX);
-        if (r == 1)
-            Ref = refract_ray(dest / dest.length(), N / N.length(), closest->refractive_index);
-        else
-            Ref = refract_ray(dest / dest.length(), N / N.length() * -1, closest->refractive_index);
+        Ref = refract_ray(dest / dest.length(), N / N.length(), closest->refractive_index);
         color refracted_color = trace(P, Ref, objects, depth-1, EPS, INT_MAX);
         result = result * (1 - closest->reflective - closest->refractive) +
                 reflected_color * closest->reflective + refracted_color * closest->refractive;

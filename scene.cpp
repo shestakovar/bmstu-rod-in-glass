@@ -8,8 +8,23 @@ double degrees_to_radians(double angle) {
     return angle * PI / 180;
 }
 
+void setup_glassplain_from_triangle(triangle *tr) {
+        tr->color = {0, 186, 228};
+        tr->reflective = 0.01;
+        tr->refractive = 0.4;
+        tr->refractive_index = 1.3;
+        tr->specular = 20;
+        tr->transparent = true;
+        point_3d n = get_normal_vector(tr->vertex[0], tr->vertex[1], tr->vertex[2], tr->left_oriented);
+                tr->A = int(round(n.x));
+                tr->B = int(round(n.y));
+                tr->C = int(round(n.z));
+                tr->D = int(round(-n.x*tr->vertex[0].x-n.y*tr->vertex[0].y-n.z*tr->vertex[0].z));
+}
+
 scene *init_scene() {
-    physical_items *items = new physical_items;
+    scene_objects *sc_o = new scene_objects;
+    sc_o->lamp = lamp;
 //    sphere *t1 = new sphere;
 //    t1->color = {255, 0, 0}; //red
 //    t1->center = {0, 0, 3};
@@ -19,7 +34,7 @@ scene *init_scene() {
 //    t1->refractive = 0.5;
 //    t1->refractive_index = 1.5;
 //    t1->transparent = false;
-//    items->t_vec.push_back(t1);
+//    sc_o->items.push_back(t1);
 
 //    sphere *t2 = new sphere;
 //    t2->color = {0, 0, 255}; //blue
@@ -53,7 +68,7 @@ scene *init_scene() {
     t4->refractive = 0;
     t4->refractive_index = 1;
     t4->transparent = false;
-    items->t_vec.push_back(t4); //!
+    sc_o->items.push_back(t4); //!
 
     sphere *t5 = new sphere;
     t5->color = {255, 255, 0}; //yellow
@@ -64,7 +79,7 @@ scene *init_scene() {
     t5->refractive = 0;
     t5->refractive_index = 1;
     t5->transparent = false;
-    items->t_vec.push_back(t5); //!
+    sc_o->items.push_back(t5); //!
 
 //    sphere *t6 = new sphere;
 //    t6->color = {255, 0, 0}; //red 2
@@ -104,7 +119,6 @@ scene *init_scene() {
     const int width = 2; //ширина /2
     const int height = 3; //высота /2
     triangle *tr = new triangle;
-//    std::vector<triangle*> tr_vec;
     tr->vertex[0] = {-width, -height, 8}; //Левая нижняя
     tr->vertex[2] = {width, -height, 8}; //Правая нижняя
     tr->vertex[1] = {width, height, 8}; //Правая верхняя
@@ -113,7 +127,8 @@ scene *init_scene() {
 //    tr.C = 1;
 //    tr.D = -8;
     tr->left_oriented = true;
-    items->tr_vec.push_back(tr);
+    setup_glassplain_from_triangle(tr);
+    sc_o->items.push_back(tr);
 
     tr = new triangle;
     tr->vertex[0] = {width, height, 8}; //Правая верхняя
@@ -124,7 +139,8 @@ scene *init_scene() {
 //    tr.C = 1;
 //    tr.D = -8;
     tr->left_oriented = true;
-    items->tr_vec.push_back(tr);
+    setup_glassplain_from_triangle(tr);
+    sc_o->items.push_back(tr);
 
     //Левый бок
     tr = new triangle;
@@ -136,7 +152,8 @@ scene *init_scene() {
 //    tr.C = 0;
 //    tr.D = 2;
     tr->left_oriented = true;
-    items->tr_vec.push_back(tr);
+    setup_glassplain_from_triangle(tr);
+    sc_o->items.push_back(tr);
 
     tr = new triangle;
     tr->vertex[0] = {-width, -height, 8}; //Левая нижняя
@@ -147,7 +164,8 @@ scene *init_scene() {
 //    tr.C = 0;
 //    tr.D = 2;
     tr->left_oriented = true;
-    items->tr_vec.push_back(tr);
+    setup_glassplain_from_triangle(tr);
+    sc_o->items.push_back(tr);
 
     //Правый бок
     tr = new triangle;
@@ -159,7 +177,8 @@ scene *init_scene() {
 //    tr.C = 0;
 //    tr.D = 2;
     tr->left_oriented = false;
-    items->tr_vec.push_back(tr);
+    setup_glassplain_from_triangle(tr);
+    sc_o->items.push_back(tr);
 
     tr = new triangle;
     tr->vertex[0] = {width, -height, 8 + width*2}; //Правая нижняя дальняя
@@ -170,7 +189,8 @@ scene *init_scene() {
 //    tr.C = 0;
 //    tr.D = 2;
     tr->left_oriented = false;
-    items->tr_vec.push_back(tr);
+    setup_glassplain_from_triangle(tr);
+    sc_o->items.push_back(tr);
 
     //Зад
     tr = new triangle;
@@ -182,7 +202,8 @@ scene *init_scene() {
 //    tr.C = -1;
 //    tr.D = 8 + width * 2;
     tr->left_oriented = false;
-    items->tr_vec.push_back(tr);
+    setup_glassplain_from_triangle(tr);
+    sc_o->items.push_back(tr);
 
     tr = new triangle;
     tr->vertex[0] = {-width, -height, 8+width*2}; //Левая нижняя
@@ -193,7 +214,8 @@ scene *init_scene() {
 //    tr.C = - 1;
 //    tr.D = 8 + width * 2;
     tr->left_oriented = false;
-    items->tr_vec.push_back(tr);
+    setup_glassplain_from_triangle(tr);
+    sc_o->items.push_back(tr);
 
     //Низ
     tr = new triangle;
@@ -205,7 +227,8 @@ scene *init_scene() {
 //    tr.C = 0;
 //    tr.D = -height;
     tr->left_oriented = true;
-    items->tr_vec.push_back(tr);
+    setup_glassplain_from_triangle(tr);
+    sc_o->items.push_back(tr);
 
     tr = new triangle;
     tr->vertex[0] = {width, -height, 8}; //Правая нижняя
@@ -216,7 +239,8 @@ scene *init_scene() {
 //    tr.C = 0;
 //    tr.D = -height;
     tr->left_oriented = true;
-    items->tr_vec.push_back(tr);
+    setup_glassplain_from_triangle(tr);
+    sc_o->items.push_back(tr);
 
     //Верх
     tr = new triangle;
@@ -228,7 +252,8 @@ scene *init_scene() {
 //    tr.C = 0;
 //    tr.D = -height;
     tr->left_oriented = true;
-    items->tr_vec.push_back(tr);
+    setup_glassplain_from_triangle(tr);
+    sc_o->items.push_back(tr);
 
     tr = new triangle;
     tr->vertex[0] = {width, height, 8}; //Правая вехрняя
@@ -239,27 +264,9 @@ scene *init_scene() {
 //    tr.C = 0;
 //    tr.D = -height;
     tr->left_oriented = true;
-    items->tr_vec.push_back(tr);
+    setup_glassplain_from_triangle(tr);
+    sc_o->items.push_back(tr);
 
-    for (auto i = 0; i < items->tr_vec.size(); i++) {
-        triangle *tr = items->tr_vec[i];
-        tr->color = {0, 186, 228};
-        tr->reflective = 0.01;
-        tr->refractive = 0.4;
-        tr->refractive_index = 1.3;
-        tr->specular = 20;
-        tr->transparent = true;
-        point_3d n = get_normal_vector(items->tr_vec[i]->vertex[0], items->tr_vec[i]->vertex[1], items->tr_vec[i]->vertex[2], items->tr_vec[i]->left_oriented);
-                items->tr_vec[i]->A = int(round(n.x));
-                items->tr_vec[i]->B = int(round(n.y));
-                items->tr_vec[i]->C = int(round(n.z));
-                items->tr_vec[i]->D = int(round(-n.x*items->tr_vec[i]->vertex[0].x-n.y*items->tr_vec[i]->vertex[0].y-n.z*items->tr_vec[i]->vertex[0].z));
-    }
-
-
-    scene_objects *sc_o = new scene_objects;
-    sc_o->item = items;
-    sc_o->lamp = lamp;
 
     scene *sc = new scene;
     sc->O = O;

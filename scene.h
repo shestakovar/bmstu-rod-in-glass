@@ -7,16 +7,10 @@ extern point_3d O;
 extern light_src lamp;
 extern point_3d angle;
 
-class physical_items {
-public:
-    std::vector<sphere*> t_vec;
-    std::vector<triangle*> tr_vec;
-};
-
 class scene_objects {
 public:
     light_src lamp;
-    physical_items *item;
+    std::vector<Figure*> items;
 };
 
 class scene {
