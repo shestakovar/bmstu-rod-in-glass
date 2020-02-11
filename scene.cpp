@@ -2,7 +2,7 @@
 
 point_3d O = {6, 8, 0};
 light_src lamp = {0.6, {2, 1, 1}};
-point_3d angle = {30, -30, 0};
+point_3d angle = {26, -30, 0};
 double coeff_n = 1.33;
 bool isball = true;
 
@@ -85,7 +85,7 @@ scene *init_scene() {
 
     sphere *t5 = new sphere;
     t5->color = {255, 255, 0}; //yellow
-    t5->center = {0, -5005, 0};
+    t5->center = {0, -5003, 0};
     t5->radius = 5000;
     t5->specular = 1000;
     t5->reflective = 0.4; //0.05

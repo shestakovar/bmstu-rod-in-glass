@@ -138,7 +138,7 @@ public:
 
 class Pixel {
 public:
-    point_3d pos;
+    point_2d pos;
     color color;
 };
 
@@ -199,8 +199,12 @@ public:
             auto min_root = std::min_element(roots.begin(), roots.end());
 
             point_3d crosspoint = viewer + viewport * *min_root;
-            if (crosspoint.y < down_y || crosspoint.y > up_y)
-                roots.clear();
+            if (crosspoint.y < down_y || crosspoint.y > up_y) {
+                auto max_root = std::max_element(roots.begin(), roots.end());
+                crosspoint = viewer + viewport * *max_root;
+                if (crosspoint.y < down_y || crosspoint.y > up_y)
+                    roots.clear();
+            }
         }
         return roots;
     }

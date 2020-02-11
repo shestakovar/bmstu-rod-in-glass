@@ -230,7 +230,7 @@ public:
         turnZ->setText(QCoreApplication::translate("MainWindow", "0", nullptr));
         label_11->setText(QCoreApplication::translate("MainWindow", "\320\237\320\276\320\262\320\276\321\200\320\276\321\202", nullptr));
         turnY->setText(QCoreApplication::translate("MainWindow", "-30", nullptr));
-        turnX->setText(QCoreApplication::translate("MainWindow", "30", nullptr));
+        turnX->setText(QCoreApplication::translate("MainWindow", "26", nullptr));
         label_12->setText(QCoreApplication::translate("MainWindow", "X", nullptr));
         pushButton->setText(QCoreApplication::translate("MainWindow", "\320\222\320\270\320\267\321\203\320\260\320\273\320\270\320\267\320\270\321\200\320\276\320\262\320\260\321\202\321\214", nullptr));
         groupBox_4->setTitle(QCoreApplication::translate("MainWindow", "\320\224\320\276\320\277\320\276\320\273\320\275\320\270\321\202\320\265\320\273\321\214\320\275\320\276", nullptr));
